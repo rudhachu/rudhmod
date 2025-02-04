@@ -1,0 +1,82 @@
+{
+  "name": "rudhra-bot",
+  "description": "Rudhra WhatsApp Bot",
+  "logo": "https://i.imgur.com/Zim2VKH.jpeg",
+  "repository": "https://github.com/princerudh/rudhra-bot",
+  "keywords": ["rudhra", "whatsapp", "bot"],
+  "success_url": "/",
+  "stack": "container",
+  "env": {
+    "SESSION_ID": {
+      "description": "SESSION ID FOR BOT",
+      "required": true,
+      "value": "Rudhra~"
+    },
+    "BOT_INFO": {
+      "description": "BOT INFO",
+      "required": true,
+      "value": "Ʀ ᴜ ᴅ ʜ ʀ λ;Ƥ ʀ ɪ ɴ ᴄ ᴇ  Ʀ ᴜ ᴅ ʜ;https://raw.githubusercontent.com/rudhraan/media/main/image/rudhra3.jpeg"
+    },
+    "SUDO": {
+      "description": "SUDO NUMBERS (comma-separated)",
+      "required": true,
+      "value": "919895282960"
+    },
+    "AUTHOR": {
+      "description": "STICKER AUTHOR",
+      "required": false,
+      "value": "Ʀ ᴜ ᴅ ʜ ʀ λ"
+    },
+    "PACKNAME": {
+      "description": "STICKER PACKNAME",
+      "required": false,
+      "value": "Ʀ ᴜ ᴅ ʜ ʀ λ;Ƥ ʀ ɪ ɴ ᴄ ᴇ  Ʀ ᴜ ᴅ ʜ"
+    },
+    "AUTO_READ": {
+      "description": "AUTO READ MSGS",
+      "required": false,
+      "value": "false"
+    },
+    "RMBG_KEY": {
+      "description": "REMOVE BG API KEY",
+      "required": false,
+      "value": ""
+    },
+    "HEROKU_APP_NAME": {
+      "description": "HEROKU APP NAME (same as above)",
+      "required": true
+    },
+    "HEROKU_API_KEY": {
+      "description": "HEROKU API KEY (used for Heroku variables)",
+      "required": true
+    }
+  },
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "eco"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+    },
+    {
+      "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
+    },
+    {
+      "url": "https://github.com/pathwaysmedical/heroku-buildpack-tesseract"
+    }
+  ],
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "13"
+      }
+    }
+  ]
+}
