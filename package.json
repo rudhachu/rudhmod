@@ -22,7 +22,7 @@
     "@adiwajshing/keyed-db": "^0.2.4",
     "acrcloud": "^1.4.0",
     "axios": "^1.4.0",
-    "baileys": "github:princerudh/Baileys.js",
+    "baileys": "github:princerudh/Bailey",
     "bitly": "^7.1.2",
     "browser-id3-writer": "^5.0.0",
     "cheerio": "^1.0.0-rc.12",
