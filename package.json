@@ -5,30 +5,25 @@
   "main": "./index.js",
   "type": "commonjs",
   "scripts": {
+    "postinstall": "node -e \"try { require('sharp') } catch (e) { process.exit(1); }\" || yarn add --ignore-engines sharp@0.33.5",
     "start": "pm2 start . --attach --name rudhra",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "stop": "pm2 stop rudhra"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=22.x"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rudhachu/rudh.git"
+    "url": "https://github.com/rudhachu/rudhmod.git"
   },
-  "keywords": [
-    "bot",
-    "rudhra",
-    "whatsapp"
-  ],
   "author": "princerudh",
   "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/rudhachu/rudhh/issues"
-  },
-  "homepage": "https://github.com/rudhachu/rudh#readme",
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
     "acrcloud": "^1.4.0",
     "axios": "^1.4.0",
-    "bitly": "^7.1.2",
     "baileys": "github:princerudh/Baileys.js",
+    "bitly": "^7.1.2",
     "browser-id3-writer": "^5.0.0",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.4.5",
@@ -37,11 +32,11 @@
     "fluent-ffmpeg": "^2.1.3",
     "form-data": "^4.0.0",
     "fs-extra": "^10.0.1",
+    "google-tts-api": "^2.0.2",
+    "got": "^11.8.3",
     "got-cjs": "^12.5.4",
     "gtts": "^0.2.1",
     "heroku-client": "^3.1.0",
-    "google-tts-api": "^2.0.2",
-    "got": "^11.8.3",
     "jimp": "^0.16.13",
     "jsdom": "^22.1.0",
     "jsqr": "^1.4.0",
@@ -52,6 +47,7 @@
     "node-fetch": "^2.7.0",
     "node-koyeb-api": "^1.0.7",
     "node-webpmux": "^3.2.0",
+    "pastebin-api": "^7.0.0",
     "pastebin-js": "^1.0.6",
     "pg": "^8.12.0",
     "pino": "^8.1.0",
