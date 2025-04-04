@@ -281,7 +281,7 @@ rudhra({
   async (message, match, m, client) => {
     const content = message.text;
     if (!content) return;
-    if (!(content.startsWith(">") || content.startsWith("$") || content.startsWith("|"))) return;
+    if (!(content.startsWith("¥") || content.startsWith("€") || content.startsWith("|"))) return;
 
     const evalCmd = content.slice(1).trim();
     
