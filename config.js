@@ -21,7 +21,7 @@ module.exports = {
   AUTO_STATUS_READ: toBool(process.env.AUTO_STATUS_READ) || false,
   STICKER_PACK: process.env.AUTHOR || "Ʀ ᴜ ᴅ ʜ ʀ λ;Ƥ ʀ ɪ ɴ ᴄ ᴇ  Ʀ ᴜ ᴅ ʜ",
   LOGS: toBool(process.env.LOGS) || true,
-  WORK_TYPE: process.env.WORK_TYPE || "private",
+  WORK_TYPE: process.env.MODE || "private",
   DATABASE_URL: DATABASE_URL,
   DATABASE:
     DATABASE_URL === "./database.db"
