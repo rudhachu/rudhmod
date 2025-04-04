@@ -14,8 +14,7 @@ rudhra({
 
     const groupId = message.jid;
     let antilink = await getAntilink(groupId);
-    const [rawAction] = match.toLowerCase().trim().split(" ");
-    const action = rawAction || "";
+    const action = (match || "").toLowerCase().trim().split(" ")[0];
 
     const ensureAntilink = async () => {
       if (!antilink) {
@@ -54,8 +53,8 @@ rudhra({
       case "get":
         if (antilink) {
           await message.reply(`Antilink status:
-Enabled: ${antilink.isEnabled}
-Action: ${antilink.action}`);
+        Enabled: ${antilink.isEnabled}
+        Action: ${antilink.action}`);
         } else {
           await message.reply("Antilink is not set up for this group.");
         }
