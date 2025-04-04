@@ -8,15 +8,24 @@ rudhra({
     type: "group",
   },
   async (message, match) => {
+    if (!message.isGroup) {
+      return await message.reply("This command only works in group chats.");
+    }
+
     const groupId = message.jid;
     let antilink = await getAntilink(groupId);
-    const [action] = match.split(" ");
+    const [rawAction] = match.toLowerCase().trim().split(" ");
+    const action = rawAction || "";
+
+    const ensureAntilink = async () => {
+      if (!antilink) {
+        antilink = await createAntilink(groupId);
+      }
+    };
 
     switch (action) {
       case "on":
-        if (!antilink) {
-          antilink = await createAntilink(groupId);
-        }
+        await ensureAntilink();
         await updateAntilink(groupId, { isEnabled: true });
         await message.reply("Antilink has been enabled for this group.");
         break;
@@ -31,17 +40,13 @@ rudhra({
         break;
 
       case "kick":
-        if (!antilink) {
-          antilink = await createAntilink(groupId);
-        }
+        await ensureAntilink();
         await updateAntilink(groupId, { action: "kick" });
         await message.reply("Antilink action set to: kick");
         break;
 
       case "all":
-        if (!antilink) {
-          antilink = await createAntilink(groupId);
-        }
+        await ensureAntilink();
         await updateAntilink(groupId, { action: "all" });
         await message.reply("Antilink action set to: all");
         break;
