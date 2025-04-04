@@ -56,7 +56,7 @@ const { saveContact,
   saveMessage,
   loadMessage,
   saveChat,
-  getName } = require("../lib/database/store");
+  getName } = require("../lib/database/StoreDb");
 const config = require ('../config')
 rudhra({pattern: '> ?(.*)', fromMe: true,dontAddCommandList: true, desc: 'Run js code (evel)', type: 'misc'}, async (message, match, client) => {return});
 rudhra({on: 'text', fromMe: true, dontAddCommandList: true,desc: 'Run js code (evel)', type: 'misc'}, async (message, match, client) => {
