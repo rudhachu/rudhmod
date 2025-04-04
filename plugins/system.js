@@ -1,7 +1,8 @@
 const { rudhra, mode, getCpuInfo, runtime, commands, removePluginHandler, installPluginHandler, listPluginsHandler, getJson } = require("../lib");
 const util = require("util");
 const axios = require("axios");
-const { TIME_ZONE } = require("../config");
+const config = require("../config");
+const version = require("../package.json").version;
 const { exec, execSync } = require("child_process");
 const { PausedChats } = require("../lib/database");
 
@@ -133,87 +134,98 @@ rudhra({
 );
 
 rudhra({
-		pattern: "menu",
-		fromMe: mode,
-		description: "Show All Commands",
-		dontAddCommandList: true,
-},
-	async (message, query) => {
-		if (query) {
-			for (const plugin of commands) {
-				if (plugin.pattern && plugin.pattern.test(message.prefix + query)) {
-					const commandName = plugin.pattern.toString().split(/\W+/)[2];
-					return message.reply(`\`\`\`Command: ${message.prefix}${commandName.trim()}
-                  Description: ${plugin.description || "No description available"}\`\`\``);
-				}
-			}
-			return message.reply("Command not found.");
-		} else {
-			const { prefix } = message;
-			const [currentDate, currentTime] = new Date().toLocaleString("en-IN", { timeZone: TIME_ZONE }).split(",");
-			let menuText = `╭───────────────
-│ User: ${message.pushName}
-│ Prefix: ${prefix}
-│ Date: ${currentDate}
-│ Time: ${currentTime}
-│ Plugins: ${commands.length}
-│ Runtime: ${runtime(process.uptime())}
-╰────────────────\n`;
-
-			const commandList = [];
-			const categories = new Set();
-
-			commands.forEach(command => {
-				if (command.pattern && !command.dontAddCommandList) {
-					const commandName = command.pattern.toString().split(/\W+/)[2];
-					const category = command.type ? command.type.toLowerCase() : "misc";
-					commandList.push({name: commandName, category});
-					categories.add(category);
-				}
-			});
-
-			commandList.sort((a, b) => a.name.localeCompare(b.name));
-			Array.from(categories)
-				.sort()
-				.forEach(category => {
-					menuText += `\n╭── ${category.toUpperCase()} ────`;
-					const categoryCommands = commandList.filter(cmd => cmd.category === category);
-					categoryCommands.forEach(({name}) => {
-						menuText += `\n│ ${name}`;
-					});
-					menuText += `\n╰──────────────\n`;
-				});
-			return await message.send(menuText.trim());
-		}
-	},
-);
+    pattern: "list",
+    fromMe: mode,
+    dontAddCommandList: true
+}, async (message, query) => {
+    let msg = '';
+    let no = 1;
+    for (const command of commands) {
+        if (command.dontAddCommandList === false && command.pattern !== undefined) {
+            msg += `${no++}. ${command.pattern.toString().query(/(\W*)([A-Za-z0-9_ğüşiö ç]*)/)[2].trim()}\n${command.desc}\n\n`;
+        }
+    }
+    await message.send(msg.trim());
+});
 
 rudhra({
-		pattern: "list",
-		fromMe: mode,
-		description: "Show All Commands",
-		dontAddCommandList: true,
-	},
-	async (message, query, { prefix }) => {
-		let commandListText = "\t\t```Command List```\n";
-		const commandList = [];
+    pattern: "menu",
+    fromMe: mode,
+    dontAddCommandList: true
+}, async (message, query) => {
+const readMore = String.fromCharCode(8206).repeat(4001);
+    if (query) {
+      for (let i of commands) {
+        if (
+          i.pattern instanceof RegExp &&
+          i.pattern.test(message.prefix + query)
+        ) {
+          const cmdName = i.pattern.toString().split(/\W+/)[1];
+          message.reply(`\`\`\`rudhra: ${message.prefix}${cmdName.trim()}
+Description: ${i.desc}\`\`\``);
+        }
+      }
+    } else {
+      let { prefix } = message;
+      let [date, time] = new Date()
+        .toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
+        .split(",");
+      let menu = `                                                             
+        Hey 👋   ${message.pushName}
+        *Bot Name*  :  ${config.BOT_INFO.split(";")[0]} 
+        *Version*   :   ${version}
+        *Prefix*   :   ${PREFIX}
+        *Mode*   :   ${config.MODE}
+        *Date*    :    ${date}
+        *Commands*   :   ${commands.length}
+                  
+                █║▌║▌║║▌║ █
+                 ʀ   ᴜ   ᴅ   ʜ   ʀ   ᴀ
+                                                             \n\n ${readMore}`;
+      let cmnd = [];
+      let cmd;
+      let category = [];
+      commands.map((rudhra, num) => {
+        if (rudhra.pattern instanceof RegExp) {
+          cmd = rudhra.pattern.toString().split(/\W+/)[1];
+        }
 
-		commands.forEach(command => {
-			if (command.pattern && !command.dontAddCommandList) {
-				const commandName = command.pattern.toString().split(/\W+/)[2]; // Changed this line
-				const description = command.desc || command.info || "No description available";
-				commandList.push({ name: commandName, description });
-			}
-		});
+        if (!rudhra.dontAddCommandList && cmd !== undefined) {
+          let type = rudhra.type ? rudhra.type.toLowerCase() : "misc";
 
-		commandList.sort((a, b) => a.name.localeCompare(b.name));
-		commandList.forEach(({ name, description }, index) => {
-			commandListText += `\`\`\`${index + 1} ${name.trim()}\`\`\`\n`;
-			commandListText += `Use: \`\`\`${description}\`\`\`\n\n`;
-		});
+          cmnd.push({ cmd, type });
 
-		return await message.send(commandListText);
-	},
+          if (!category.includes(type)) category.push(type);
+        }
+      });
+      cmnd.sort();
+      category.sort().forEach((cmmd) => {
+        menu += `\n         ❮ *${cmmd.toUpperCase()}* ❯         `;
+        menu += `\n      `;
+        let comad = cmnd.filter(({ type }) => type == cmmd);
+        comad.forEach(({ cmd }) => {
+          menu += `\n      •  ${cmd.trim()} `;
+        });
+        menu += `\n\n      `;
+      menu += `\n                                                `;
+        });
+      menu += `\n\n${config.BOT_INFO.split(";")[0]}`;
+      return await message.send(menu, {
+    contextInfo: {
+externalAdReply: {
+                    title: config.LINK_PREVIEW.split(";")[0],
+                    body: config.LINK_PREVIEW.split(";")[1],
+                    sourceUrl: "https://github.com/princerudh/rudhra-bot",
+                    mediaUrl: "https://instagram.com",
+                    mediaType: 1,
+                    showAdAttribution: true,
+                    renderLargerThumbnail: false,
+                    thumbnailUrl: config.LINK_PREVIEW.split(";")[2]
+                }
+    },
+  });
+    }
+  }
 );
 
 rudhra({
