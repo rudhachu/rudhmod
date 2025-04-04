@@ -22,6 +22,8 @@ module.exports = {
   STICKER_PACK: process.env.AUTHOR || "Ʀ ᴜ ᴅ ʜ ʀ λ;Ƥ ʀ ɪ ɴ ᴄ ᴇ  Ʀ ᴜ ᴅ ʜ",
   LOGS: toBool(process.env.LOGS) || true,
   WORK_TYPE: process.env.MODE || "private",
+  AUDIO_DATA: process.env.AUDIO_DATA || "𝗥𝗨𝗗𝗛𝗥𝗔 𝗕𝗢𝗧;Ƥ ʀ ɪ ɴ ᴄ ᴇ  Ʀ ᴜ ᴅ ʜ;https://raw.githubusercontent.com/rudhraan/media/main/image/rudhra2.jpg",
+  LINK_PREVIEW: process.env.LINK_PREVIEW || "𝗥𝗨𝗗𝗛𝗥𝗔 𝗕𝗢𝗧;Ƥ ʀ ɪ ɴ ᴄ ᴇ  Ʀ ᴜ ᴅ ʜ;https://raw.githubusercontent.com/rudhraan/media/main/image/rudhlogo.jpg",
   DATABASE_URL: DATABASE_URL,
   DATABASE:
     DATABASE_URL === "./database.db"
