@@ -23,7 +23,7 @@ module.exports = {
   LOGS: toBool(process.env.LOGS) || true,
   WORK_TYPE: process.env.MODE || "private",
   AUDIO_DATA: process.env.AUDIO_DATA || "𝗥𝗨𝗗𝗛𝗥𝗔 𝗕𝗢𝗧;Ƥ ʀ ɪ ɴ ᴄ ᴇ  Ʀ ᴜ ᴅ ʜ;https://raw.githubusercontent.com/rudhraan/media/main/image/rudhra2.jpg",
-  LINK_PREVIEW: process.env.LINK_PREVIEW || "𝗥𝗨𝗗𝗛𝗥𝗔 𝗕𝗢𝗧;Ƥ ʀ ɪ ɴ ᴄ ᴇ  Ʀ ᴜ ᴅ ʜ;https://raw.githubusercontent.com/rudhraan/media/main/image/rudhlogo.jpg",
+  LINK_PREVIEW: process.env.LINK_PREVIEW || "𝗥𝗨𝗗𝗛𝗥𝗔 𝗕𝗢𝗧;Ƥ ʀ ɪ ɴ ᴄ ᴇ  Ʀ ᴜ ᴅ ʜ;https://raw.githubusercontent.com/rudhraan/media/main/image/rudhlogo.jpeg",
   DATABASE_URL: DATABASE_URL,
   DATABASE:
     DATABASE_URL === "./database.db"
