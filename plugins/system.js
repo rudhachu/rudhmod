@@ -174,7 +174,7 @@ Description: ${i.desc}\`\`\``);
         Hey 👋   ${message.pushName}
         *Bot Name*  :  ${config.BOT_INFO.split(";")[0]} 
         *Version*   :   ${version}
-        *Prefix*   :   ${PREFIX}
+        *Prefix*   :   ${config.HANDLER}
         *Mode*   :   ${config.MODE}
         *Date*    :    ${date}
         *Commands*   :   ${commands.length}
